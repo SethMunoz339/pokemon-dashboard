@@ -21,9 +21,9 @@ document.getElementById('clearButton').addEventListener('click', function() {
   });
 
   // Handle form submission
-  $('#search-input').submit(function(event) {
+  $('#search-form').submit(function(event) {
     event.preventDefault();
-    var pokemonName = $('#pokemonName-input').val().trim();
+    var pokemonName = $('#search-input').val().trim();
 
 
     if (pokemonName === '') {
@@ -31,10 +31,10 @@ document.getElementById('clearButton').addEventListener('click', function() {
     }
 
     // Clear input field
-    $('#pokemonName-input').val('');
+    $('#search-input').val('');
 
     // Add pokemon name to search history
-    searchHistory.push(pokemon);
+    searchHistory.push(pokemonName);
     localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     displaySearchHistory();
 
@@ -45,9 +45,9 @@ document.getElementById('clearButton').addEventListener('click', function() {
     .then(function (response) {
       return response.json();
     })
-
     .then(function (data) {
-    var pokeId = data[0].order
+        console.log(data)
+    var pokeId = data[0].id
     var pokeName = data[0].name
     console.log(pokeId)
     console.log(pokeName)
