@@ -21,7 +21,7 @@ document.getElementById('clearButton').addEventListener('click', function() {
   });
 
   // Handle form submission
-  $('#search-form').submit(function(event) {
+  $('#search-input').submit(function(event) {
     event.preventDefault();
     var pokemonName = $('#pokemonName-input').val().trim();
 
