@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Pokemon Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
 ​
 <header>
@@ -14,9 +14,18 @@
 </header>
 ​
 <body>
-  <input type="text" id="search-input" class="form-control" placeholder="Search Pokemon">
-  <button type="submit" class="btn btn-primary">Search</button>
-  <button id="clear-button" class="clear-button">Clear</button>
+    <form id="search-form">
+        <div class="form-group">
+          <label for="pokemon-input">Search for a Pokemon:</label>
+          <input type="text" class="form-control" id="search-input" placeholder="Search for a pokemon">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button id="clearButton">Clear Search History</button>
+      </form>
+      <div>
+      <h3>Search History:</h3>
+        <ul id="search-history" class="list-group"></ul>
+    </div>
 </body>
 ​
 <container>
