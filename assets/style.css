@@ -1,0 +1,25 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+
+.block:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.input {
+    width:25%;
+}
+
+body {
+    background-color: #fffff0;
+}
+
+.navbar {
+    background-color: #2a75bb;
+}
+
+.navigation-buttons {
+    margin:15px;
+}
+
+.footer {
+    background-color: #ffcb05;
+}

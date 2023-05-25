@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US">
-​
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,39 +8,56 @@
   <title>Pokemon Dashboard</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-​
-<header>
-  <h1>PokeAPI Dashboard</h1>
-</header>
-​
+
+<nav class="navbar" role="navigation" aria-label="main navigation" >
+  <div class="navbar-brand">
+    <a class="navbar-item" >
+      <div>PokeAPI Dashboard</div>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Home
+      </a>
+    </div>
+  </div>
+</nav>
+
 <body>
     <form id="search-form">
-        <div class="form-group">
+        <div class="form-group navigation-buttons">
           <label for="pokemon-input">Search for a Pokemon:</label>
-          <input type="text" class="form-control" id="search-input" placeholder="Search for a pokemon">
+          <input type="text" class="form-control input is-primary is-small is-rounded" id="search-input" placeholder="Search for a pokemon">
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-        <button id="clearButton">Clear Search History</button>
+        <button type="submit" class="btn btn-primary button">Search</button>
+        <button id="clearButton" class="button">Clear Search History</button>
       </form>
       <div>
       <h3>Search History:</h3>
         <ul id="search-history" class="list-group"></ul>
     </div>
+
+    <div class="container has-text-centered">
+      <div>Display Area 1</div>
+      <div>Display Area 2</div>
+  </div>
 </body>
-​
-<container>
-Display Area 1
-</container>
-​
-<container2>
-Display Area 2
-</container2>
-​
-<footer>
-  Pokemon Dashboard 2023
-  (Seth, Jon, Colin)
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    Pokemon Dashboard 2023
+    (Seth, Jon, Colin)
+  </div>
 </footer>
-​
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="assets/script.js"></script>
 </html>
