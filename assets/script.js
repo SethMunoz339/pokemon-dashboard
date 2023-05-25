@@ -17,7 +17,8 @@ displaySearchHistory();
 
 document.getElementById('clearButton').addEventListener('click', function() {
     localStorage.clear();
-    alert('Your Pokedex storage has been emptied. Refresh the page.');
+    alert('Your Pokedex storage has been emptied.');
+    location.reload();
   });
 
   // Handle form submission
@@ -47,8 +48,9 @@ document.getElementById('clearButton').addEventListener('click', function() {
     })
     .then(function (data) {
         console.log(data)
-    var pokeId = data[0].id
-    var pokeName = data[0].name
+        
+    var pokeId = data.id
+    var pokeName = data.name
     console.log(pokeId)
     console.log(pokeName)
     })});
