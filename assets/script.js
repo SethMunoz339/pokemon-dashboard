@@ -87,8 +87,16 @@ document.getElementById('clearButton').addEventListener('click', function() {
         var type = $('<li>').text(data.types[i].type.name);
         pokeInfo.append( type)
       }
+      var pokemonGoCallURL = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName;
+
+    fetch(pokemonGoCallURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+        console.log(data)
 
         
 
 
-    })});
+  })})});
