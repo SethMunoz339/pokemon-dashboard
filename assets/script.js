@@ -2,15 +2,17 @@
 
 // Load search history from localStorage
 var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
- 
+
   
 // Display search and clear search history
 function displaySearchHistory() {
   $('#search-history').empty();
-  for (var i = 0; i < searchHistory.length; i++) {
-    var li = $('<li>').addClass('list-group-item').text(searchHistory[i]);
+  var uniqueHistory = new Set(searchHistory); // Create a Set to store unique entries
+
+  uniqueHistory.forEach(function (entry) {
+    var li = $('<li>').addClass('list-group-item').text(entry);
     $('#search-history').append(li);
-  }
+  });
 }
 
 displaySearchHistory();
@@ -53,10 +55,13 @@ document.getElementById('clearButton').addEventListener('click', function() {
     var pokeName = data.name
     console.log(pokeId)
     console.log(pokeName)
-
+    localStorage.setItem('pokeGo', JSON.stringify(pokeId))
+    
     var pokeInfo = $('#pokeAPI');
    
       pokeInfo.empty()
+      var pokeTitle = $('<h1>').text('Gotta Catch em All!');
+      pokeInfo.append( pokeTitle);
       var pokeName = $('<h2>').text(data.name);
       pokeInfo.append( pokeName);
       var pokeId = $('<h3>').text(data.id);
@@ -87,16 +92,49 @@ document.getElementById('clearButton').addEventListener('click', function() {
         var type = $('<li>').text(data.types[i].type.name);
         pokeInfo.append( type)
       }
-      var pokemonGoCallURL = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName;
+      var pokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_stats.json';
 
-    fetch(pokemonGoCallURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-        console.log(data)
+      fetch(pokemonGoCallURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+          console.log(data)  
+      
 
+          var pokeGoInfo = $('#pogoAPI');
+          pokeGoInfo.empty()
+          var pokeGoTitle = $('<h1>').text('Pokemon GO!');
+      pokeGoInfo.append( pokeGoTitle);
+          var typeUl = $('<ul>').text('Pokemon Go - Base Statisitics:');
+      pokeGoInfo.append( typeUl);
+      var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
+        for (var i = 0; i < data.length; i++) {
+
+          if (data[i].pokemon_id === pokeGo ) {
+          // console.log(data[i])
+            var baseAttack = $('<li>').text('Base attack: ' + data[i].form + ' - ' + data[i].base_attack);
+        pokeGoInfo.append(baseAttack)
+        var baseDefense = $('<li>').text('Base defense: ' + data[i].form + ' - ' + data[i].base_defense);
+        pokeGoInfo.append(baseDefense)
+        var baseStamina = $('<li>').text('Base stamina: ' + data[i].form + ' - ' + data[i].base_stamina);
+        pokeGoInfo.append(baseStamina)
+        
+        localStorage.removeItem(pokeGo);
+          }
+        
+        
+          
+        }
         
 
 
-  })})});
+  })});
+  
+  });
+  
+  $(document).on('click', '.list-group-item', function() {
+    var pokemonName = $(this).text();
+    $('#search-input').val(pokemonName);
+    $('#search-form').submit();
+  })
