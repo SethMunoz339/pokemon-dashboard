@@ -25,7 +25,7 @@ document.getElementById('clearButton').addEventListener('click', function () {
 // Handle form submission
 $('#search-form').submit(function (event) {
   event.preventDefault();
-  var pokemonName = $('#search-input').val().trim();
+  var pokemonName = $('#search-input').val().toLowerCase().trim();
 
   if (pokemonName === '') {
     return;
@@ -146,10 +146,7 @@ function fetchRarePokemonGoData(pokeGo) {
       var standardIndex = 0;
       var ultraBeastIndex = 0;
 
-      // for (var i = 0; i < pokeGo.length; i++) {
-      //   var currentPokemon = pokeGo[i];
-      //   console.log(currentPokemon)
-
+     
         for (var j = 0; j < data.Legendary.length; j++) {
           if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
             var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[j].rarity);
@@ -185,10 +182,41 @@ function fetchRarePokemonGoData(pokeGo) {
             break;
           }
         }
+        fetchEvolutionPokemonGoData(pokeGo)
       }
     )};
-
-
+    function fetchEvolutionPokemonGoData(pokeGo) {
+      var evolutionPokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_evolutions.json';
+    
+      fetch(evolutionPokemonGoCallURL)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log(data);
+          var evolveInfo = $('#evolve');
+          evolveInfo.empty();
+          var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
+    
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].form == 'Normal' && data[i].pokemon_id === pokeGo) {
+              var evolutions = data[i].evolutions;
+              for (var j = 0; j < evolutions.length; j++) {
+                var evoName = evolutions[j].pokemon_name
+                var evolution = $('<p>').text('This pokemon evolves into ' + evoName + '!');
+                var evolveButton = $('<button>').text(evoName)
+                .on('click', evolveButton, function () {
+                  var evoName = $(this).text();
+                  $('#search-input').val(evoName);
+                  $('#search-form').submit();
+                })
+                evolveInfo.append(evolution)
+                evolveInfo.append(evolveButton);
+              }
+            }
+          }
+        });
+    }
 
 $(document).on('click', '.list-group-item', function () {
   var pokemonName = $(this).text();
