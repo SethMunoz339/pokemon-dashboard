@@ -141,25 +141,53 @@ function fetchRarePokemonGoData(pokeGo) {
       rarityInfo.empty();
       var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
 
-      for (var i = 0; i < data.Legendary.length; i++) {
-        if (data.Legendary[i].form == 'Normal' && data.Legendary[i].pokemon_id === pokeGo) {
-          var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[i].rarity);
-          rarityInfo.append(Legendary);
+      var legendaryIndex = 0;
+      var mythicIndex = 0;
+      var standardIndex = 0;
+      var ultraBeastIndex = 0;
+
+      // for (var i = 0; i < pokeGo.length; i++) {
+      //   var currentPokemon = pokeGo[i];
+      //   console.log(currentPokemon)
+
+        for (var j = 0; j < data.Legendary.length; j++) {
+          if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
+            var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[j].rarity);
+            rarityInfo.append(Legendary);
+            legendaryIndex++;
+            break;
+          }
         }
-        else if (data.Mythic[i].form == 'Normal' && data.Mythic[i].pokemon_id === pokeGo) {
-          var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[i].rarity);
-          rarityInfo.append(Mythic);
+
+        for (var k = 0; k < data.Mythic.length; k++) {
+          if (data.Mythic[k].form == 'Normal' && data.Mythic[k].pokemon_id === pokeGo) {
+            var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[k].rarity);
+            rarityInfo.append(Mythic);
+            mythicIndex++;
+            break;
+          }
         }
-        else if (data.Standard[i].form == 'Normal' && data.Standard[i].pokemon_id === pokeGo) {
-          var Standard = $('<h1>').text('Rarity: ' + data.Standard[i].rarity);
-          rarityInfo.append(Standard);
+
+        for (var l = 0; l < data.Standard.length; l++) {
+          if (data.Standard[l].form == 'Normal' && data.Standard[l].pokemon_id === pokeGo) {
+            var Standard = $('<h1>').text('Rarity: ' + data.Standard[l].rarity);
+            rarityInfo.append(Standard);
+            standardIndex++;
+            break;
+          }
         }
-        else if (data["Ultra beast"][i].form == 'Normal' && data["Ultra beast"][i].pokemon_id === pokeGo) 
-        {
-          var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][i].rarity);
-          rarityInfo.append(Ultrabeast);
+
+        for (var m = 0; m < data["Ultra beast"].length; m++) {
+          if (data["Ultra beast"][m].form == 'Normal' && data["Ultra beast"][m].pokemon_id === pokeGo) {
+            var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][m].rarity);
+            rarityInfo.append(Ultrabeast);
+            ultraBeastIndex++;
+            break;
+          }
         }
-    }})};
+      }
+    )};
+
 
 
 $(document).on('click', '.list-group-item', function () {
