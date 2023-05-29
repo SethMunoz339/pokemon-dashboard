@@ -25,7 +25,7 @@ document.getElementById('clearButton').addEventListener('click', function () {
 // Handle form submission
 $('#search-form').submit(function (event) {
   event.preventDefault();
-  var pokemonName = $('#search-input').val().trim();
+  var pokemonName = $('#search-input').val().toLowerCase().trim();
 
   if (pokemonName === '') {
     return;
@@ -141,26 +141,82 @@ function fetchRarePokemonGoData(pokeGo) {
       rarityInfo.empty();
       var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
 
-      for (var i = 0; i < data.Legendary.length; i++) {
-        if (data.Legendary[i].form == 'Normal' && data.Legendary[i].pokemon_id === pokeGo) {
-          var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[i].rarity);
-          rarityInfo.append(Legendary);
-        }
-        else if (data.Mythic[i].form == 'Normal' && data.Mythic[i].pokemon_id === pokeGo) {
-          var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[i].rarity);
-          rarityInfo.append(Mythic);
-        }
-        else if (data.Standard[i].form == 'Normal' && data.Standard[i].pokemon_id === pokeGo) {
-          var Standard = $('<h1>').text('Rarity: ' + data.Standard[i].rarity);
-          rarityInfo.append(Standard);
-        }
-        else if (data["Ultra beast"][i].form == 'Normal' && data["Ultra beast"][i].pokemon_id === pokeGo) 
-        {
-          var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][i].rarity);
-          rarityInfo.append(Ultrabeast);
-        }
-    }})};
+      var legendaryIndex = 0;
+      var mythicIndex = 0;
+      var standardIndex = 0;
+      var ultraBeastIndex = 0;
 
+     
+        for (var j = 0; j < data.Legendary.length; j++) {
+          if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
+            var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[j].rarity);
+            rarityInfo.append(Legendary);
+            legendaryIndex++;
+            break;
+          }
+        }
+
+        for (var k = 0; k < data.Mythic.length; k++) {
+          if (data.Mythic[k].form == 'Normal' && data.Mythic[k].pokemon_id === pokeGo) {
+            var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[k].rarity);
+            rarityInfo.append(Mythic);
+            mythicIndex++;
+            break;
+          }
+        }
+
+        for (var l = 0; l < data.Standard.length; l++) {
+          if (data.Standard[l].form == 'Normal' && data.Standard[l].pokemon_id === pokeGo) {
+            var Standard = $('<h1>').text('Rarity: ' + data.Standard[l].rarity);
+            rarityInfo.append(Standard);
+            standardIndex++;
+            break;
+          }
+        }
+
+        for (var m = 0; m < data["Ultra beast"].length; m++) {
+          if (data["Ultra beast"][m].form == 'Normal' && data["Ultra beast"][m].pokemon_id === pokeGo) {
+            var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][m].rarity);
+            rarityInfo.append(Ultrabeast);
+            ultraBeastIndex++;
+            break;
+          }
+        }
+        fetchEvolutionPokemonGoData(pokeGo)
+      }
+    )};
+    function fetchEvolutionPokemonGoData(pokeGo) {
+      var evolutionPokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_evolutions.json';
+    
+      fetch(evolutionPokemonGoCallURL)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log(data);
+          var evolveInfo = $('#evolve');
+          evolveInfo.empty();
+          var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
+    
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].form == 'Normal' && data[i].pokemon_id === pokeGo) {
+              var evolutions = data[i].evolutions;
+              for (var j = 0; j < evolutions.length; j++) {
+                var evoName = evolutions[j].pokemon_name
+                var evolution = $('<p>').text('This pokemon evolves into ' + evoName + '!');
+                var evolveButton = $('<button>').text(evoName)
+                .on('click', evolveButton, function () {
+                  var evoName = $(this).text();
+                  $('#search-input').val(evoName);
+                  $('#search-form').submit();
+                })
+                evolveInfo.append(evolution)
+                evolveInfo.append(evolveButton);
+              }
+            }
+          }
+        });
+    }
 
 $(document).on('click', '.list-group-item', function () {
   var pokemonName = $(this).text();
