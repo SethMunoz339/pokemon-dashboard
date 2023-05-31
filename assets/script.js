@@ -1,62 +1,59 @@
-
-
+var modal = $('.modal')
 // Load search history from localStorage
 var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
 // Display search and clear search history
 function displaySearchHistory() {
   $('#search-history').empty();
   var uniqueHistory = new Set(searchHistory); // Create a Set to store unique entries
-
   uniqueHistory.forEach(function (entry) {
     var li = $('<li>').addClass('list-group-item').text(entry);
     $('#search-history').append(li);
   });
 }
-
 displaySearchHistory();
-
-document.getElementById('clearButton').addEventListener('click', function () {
-  localStorage.clear();
-  alert('Your Pokedex storage has been emptied.');
-  location.reload();
-});
-
+document.getElementById('clearButton').addEventListener('click',
+  // Functions to open and close a modal
+  function openModal() {
+    document.getElementById("modal-clear").classList.add("is-active");
+  })
+document.getElementById('modal-delete').addEventListener('click',
+  function closeModal() {
+    document.getElementById("modal-clear").classList.remove("is-active");
+  })
+document.getElementById('clearLocalStorage').addEventListener('click',
+  function
+    () {
+    localStorage.clear();
+    document.getElementById("modal-clear").classList.remove("is-active");
+    location.reload();
+  })
 // Handle form submission
 $('#search-form').submit(function (event) {
   event.preventDefault();
   var pokemonName = $('#search-input').val().toLowerCase().trim();
-
   if (pokemonName === '') {
     return;
   }
-
   // Clear input field
   $('#search-input').val('');
-
   // Add pokemon name to search history
   searchHistory.push(pokemonName);
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
   displaySearchHistory();
-
   // Fetch data of a pokemon by name
   var pokemonCallURL = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName;
-
   fetch(pokemonCallURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       console.log(data);
-
       var pokeId = data.id;
       var pokeName = data.name;
       console.log(pokeId);
       console.log(pokeName);
       localStorage.setItem('pokeGo', JSON.stringify(pokeId));
-
       var pokeInfo = $('#pokeAPI');
-
       pokeInfo.empty();
       var pokeTitle = $('<h1>').text('Gotta Catch em All!');
       pokeInfo.append(pokeTitle);
@@ -90,15 +87,12 @@ $('#search-form').submit(function (event) {
         var type = $('<li>').text(data.types[i].type.name);
         pokeInfo.append(type);
       }
-
       var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
       fetchPokemonGoData(pokeGo);
     });
 });
-
 function fetchPokemonGoData(pokeGo) {
   var pokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_stats.json';
-
   fetch(pokemonGoCallURL)
     .then(function (response) {
       return response.json();
@@ -110,7 +104,6 @@ function fetchPokemonGoData(pokeGo) {
       pokeGoInfo.append(pokeGoTitle);
       var typeUl = $('<ul>').text('Pokemon Go - Base Statistics:');
       pokeGoInfo.append(typeUl);
-
       for (var i = 0; i < data.length; i++) {
         if (data[i].pokemon_id === pokeGo) {
           var baseAttack = $('<li>').text('Base attack: ' + data[i].form + ' - ' + data[i].base_attack);
@@ -119,18 +112,14 @@ function fetchPokemonGoData(pokeGo) {
           pokeGoInfo.append(baseDefense);
           var baseStamina = $('<li>').text('Base stamina: ' + data[i].form + ' - ' + data[i].base_stamina);
           pokeGoInfo.append(baseStamina);
-
           localStorage.removeItem(pokeGo);
         }
       }
-
       fetchRarePokemonGoData(pokeGo);
     });
 }
-
 function fetchRarePokemonGoData(pokeGo) {
   var rarePokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_rarity.json';
-
   fetch(rarePokemonGoCallURL)
     .then(function (response) {
       return response.json();
@@ -140,84 +129,76 @@ function fetchRarePokemonGoData(pokeGo) {
       var rarityInfo = $('#rarity');
       rarityInfo.empty();
       var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
-
       var legendaryIndex = 0;
       var mythicIndex = 0;
       var standardIndex = 0;
       var ultraBeastIndex = 0;
-
-     
-        for (var j = 0; j < data.Legendary.length; j++) {
-          if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
-            var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[j].rarity);
-            rarityInfo.append(Legendary);
-            legendaryIndex++;
-            break;
-          }
+      for (var j = 0; j < data.Legendary.length; j++) {
+        if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
+          var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[j].rarity);
+          rarityInfo.append(Legendary);
+          legendaryIndex++;
+          break;
         }
-
-        for (var k = 0; k < data.Mythic.length; k++) {
-          if (data.Mythic[k].form == 'Normal' && data.Mythic[k].pokemon_id === pokeGo) {
-            var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[k].rarity);
-            rarityInfo.append(Mythic);
-            mythicIndex++;
-            break;
-          }
-        }
-
-        for (var l = 0; l < data.Standard.length; l++) {
-          if (data.Standard[l].form == 'Normal' && data.Standard[l].pokemon_id === pokeGo) {
-            var Standard = $('<h1>').text('Rarity: ' + data.Standard[l].rarity);
-            rarityInfo.append(Standard);
-            standardIndex++;
-            break;
-          }
-        }
-
-        for (var m = 0; m < data["Ultra beast"].length; m++) {
-          if (data["Ultra beast"][m].form == 'Normal' && data["Ultra beast"][m].pokemon_id === pokeGo) {
-            var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][m].rarity);
-            rarityInfo.append(Ultrabeast);
-            ultraBeastIndex++;
-            break;
-          }
-        }
-        fetchEvolutionPokemonGoData(pokeGo)
       }
-    )};
-    function fetchEvolutionPokemonGoData(pokeGo) {
-      var evolutionPokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_evolutions.json';
-    
-      fetch(evolutionPokemonGoCallURL)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          console.log(data);
-          var evolveInfo = $('#evolve');
-          evolveInfo.empty();
-          var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
-    
-          for (var i = 0; i < data.length; i++) {
-            if (data[i].form == 'Normal' && data[i].pokemon_id === pokeGo) {
-              var evolutions = data[i].evolutions;
-              for (var j = 0; j < evolutions.length; j++) {
-                var evoName = evolutions[j].pokemon_name
-                var evolution = $('<p>').text('This pokemon evolves into ' + evoName + '!');
-                var evolveButton = $('<button>').text(evoName)
-                .on('click', evolveButton, function () {
-                  var evoName = $(this).text();
-                  $('#search-input').val(evoName);
-                  $('#search-form').submit();
-                })
-                evolveInfo.append(evolution)
-                evolveInfo.append(evolveButton);
-              }
-            }
-          }
-        });
+      for (var k = 0; k < data.Mythic.length; k++) {
+        if (data.Mythic[k].form == 'Normal' && data.Mythic[k].pokemon_id === pokeGo) {
+          var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[k].rarity);
+          rarityInfo.append(Mythic);
+          mythicIndex++;
+          break;
+        }
+      }
+      for (var l = 0; l < data.Standard.length; l++) {
+        if (data.Standard[l].form == 'Normal' && data.Standard[l].pokemon_id === pokeGo) {
+          var Standard = $('<h1>').text('Rarity: ' + data.Standard[l].rarity);
+          rarityInfo.append(Standard);
+          standardIndex++;
+          break;
+        }
+      }
+      for (var m = 0; m < data["Ultra beast"].length; m++) {
+        if (data["Ultra beast"][m].form == 'Normal' && data["Ultra beast"][m].pokemon_id === pokeGo) {
+          var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][m].rarity);
+          rarityInfo.append(Ultrabeast);
+          ultraBeastIndex++;
+          break;
+        }
+      }
+      fetchEvolutionPokemonGoData(pokeGo)
     }
-
+    )
+};
+function fetchEvolutionPokemonGoData(pokeGo) {
+  var evolutionPokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_evolutions.json';
+  fetch(evolutionPokemonGoCallURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      var evolveInfo = $('#evolve');
+      evolveInfo.empty();
+      var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].form == 'Normal' && data[i].pokemon_id === pokeGo) {
+          var evolutions = data[i].evolutions;
+          for (var j = 0; j < evolutions.length; j++) {
+            var evoName = evolutions[j].pokemon_name
+            var evolution = $('<p>').text('This pokemon evolves into ' + evoName + '!');
+            var evolveButton = $('<button>').text(evoName)
+              .on('click', evolveButton, function () {
+                var evoName = $(this).text();
+                $('#search-input').val(evoName);
+                $('#search-form').submit();
+              })
+            evolveInfo.append(evolution)
+            evolveInfo.append(evolveButton);
+          }
+        }
+      }
+    });
+}
 $(document).on('click', '.list-group-item', function () {
   var pokemonName = $(this).text();
   $('#search-input').val(pokemonName);

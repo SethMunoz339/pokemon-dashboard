@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-US">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,20 +7,17 @@
   <title>Pokemon Dashboard</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-
-<nav class="navbar" role="navigation" aria-label="main navigation" >
+<nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" >
+    <a class="navbar-item">
       <div>PokeAPI Dashboard</div>
     </a>
-
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item">
@@ -30,36 +26,45 @@
     </div>
   </div>
 </nav>
-
 <body>
-    <form id="search-form">
-        <div class="form-group navigation-buttons">
-          <label for="pokemon-input">Search for a Pokemon:</label>
-          <input type="text" class="form-control input is-primary is-small is-rounded" id="search-input" placeholder="Search for a pokemon">
-        </div>
-        <button type="submit" class="btn btn-primary button">Search</button>
-        <button id="clearButton" class="button">Clear Search History</button>
-      </form>
-      <div>
-      <h3>Search History:</h3>
-        <ul id="search-history" class="list-group"></ul>
+  <form id="search-form">
+    <div class="form-group navigation-buttons">
+      <label for="pokemon-input">Search for a Pokemon:</label>
+      <input type="text" class="form-control input is-primary is-small is-rounded" id="search-input"
+        placeholder="Search for a pokemon">
     </div>
-
-    <div class="container has-text-centered">
-      <div id="pokeAPI">Gotta Catch 'em All!</div>
-      <div id="rarity"></div>
-      <div id="evolve"></div>
-      <div id="pogoAPI">Pokemon Go!</div>
+    <button type="submit" class="btn btn-primary button">Search</button>
+    <div id="modal-clear" class="modal">
+      <div class="modal-background"></div>
+      <header class="modal-card-head">
+        <p class="modal-card-title">Professor Oak says,</p>
+        <div class="modal-content">Do you want to clear your Pokedex?</div>
+        <button id="clearLocalStorage">YES!</button>
+        <button id="modal-delete" class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+      </section>
+    </div>
+    <button id="clearButton" class="button">Clear Search History</button>
+    </div>
+  </form>
+  <div>
+    <h3>Search History:</h3>
+    <ul id="search-history" class="list-group"></ul>
+  </div>
+  <div class="container has-text-centered">
+    <div id="pokeAPI">Gotta Catch 'em All!</div>
+    <div id="rarity"></div>
+    <div id="evolve"></div>
+    <div id="pogoAPI">Pokemon Go!</div>
   </div>
 </body>
-
 <footer class="footer">
   <div class="content has-text-centered">
     Pokemon Dashboard 2023
     (Seth, Jon, Colin)
   </div>
 </footer>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="assets/script.js"></script>
 </html>
