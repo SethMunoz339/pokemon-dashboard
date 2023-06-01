@@ -27,19 +27,19 @@
   </div>
 </nav>
 <body>
-  <form id="search-form">
+  <form id="search-form" class="box">
     <div class="form-group navigation-buttons">
       <label for="pokemon-input">Search for a Pokemon:</label>
       <input type="text" class="form-control input is-primary is-small is-rounded" id="search-input"
         placeholder="Search for a pokemon">
     </div>
-    <button type="submit" class="btn btn-primary button">Search</button>
+    <button type="submit" class="btn btn-primary button" onclick="addCSS()">Search</button>
     <div id="modal-clear" class="modal">
       <div class="modal-background"></div>
       <header class="modal-card-head">
         <p class="modal-card-title">Professor Oak says,</p>
         <div class="modal-content">Do you want to clear your Pokedex?</div>
-        <button id="clearLocalStorage">YES!</button>
+        <button id="clearLocalStorage" class="button">YES!</button>
         <button id="modal-delete" class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
@@ -48,23 +48,30 @@
     <button id="clearButton" class="button">Clear Search History</button>
     </div>
   </form>
-  <div>
+
+<div class="columns">
+  <div class='column is-1'>
     <h3>Search History:</h3>
     <ul id="search-history" class="list-group"></ul>
   </div>
+
   <div class="container has-text-centered">
     <div id="pokeAPI">Gotta Catch 'em All!</div>
     <div id="rarity"></div>
     <div id="evolve"></div>
     <div id="pogoAPI">Pokemon Go!</div>
   </div>
+</div>
+
 </body>
+
 <footer class="footer">
   <div class="content has-text-centered">
     Pokemon Dashboard 2023
     (Seth, Jon, Colin)
   </div>
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="assets/script.js"></script>
 </html>

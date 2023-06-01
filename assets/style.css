@@ -27,3 +27,24 @@ body {
 .list-group-item {
     cursor: pointer;
   }
+
+.modal-card-head {
+    margin:200px;
+    text-align: center;
+}
+
+.modal-content {
+    text-align: center;
+    font-size: x-large;
+}
+
+.column {
+    margin: 20px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+}
+
+.box {
+    box-shadow: none;
+    background-color: ivory;
+}
