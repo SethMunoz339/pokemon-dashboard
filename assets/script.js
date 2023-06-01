@@ -199,6 +199,21 @@ function fetchEvolutionPokemonGoData(pokeGo) {
       }
     });
 }
+
+function addCSS () {
+  var element = document.getElementById('pokeAPI')
+  element.classList.add('box')
+
+  var element = document.getElementById('rarity')
+  element.classList.add('box')
+
+  var element = document.getElementById('evolve')
+  element.classList.add('box')
+
+  var element = document.getElementById('pogoAPI')
+  element.classList.add('box')
+}
+
 $(document).on('click', '.list-group-item', function () {
   var pokemonName = $(this).text();
   $('#search-input').val(pokemonName);
