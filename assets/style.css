@@ -48,3 +48,29 @@ body {
     box-shadow: none;
     background-color: ivory;
 }
+
+h1 {
+    font-size: xx-large;
+}
+
+h2 {
+    font-size: x-large;
+}
+
+h3 {
+    font-size: larger;
+}
+
+#pokelogo {
+    width: 160px;
+    height: 50px;
+    opacity: 0.6;
+}
+
+#pokelist {
+    opacity: 0.4;
+}
+
+.hide {
+    display: none;
+}

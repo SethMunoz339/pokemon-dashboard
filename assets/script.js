@@ -135,7 +135,7 @@ function fetchRarePokemonGoData(pokeGo) {
       var ultraBeastIndex = 0;
       for (var j = 0; j < data.Legendary.length; j++) {
         if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
-          var Legendary = $('<h1>').text('Rarity: ' + data.Legendary[j].rarity);
+          var Legendary = $('<h2>').text('Rarity: ' + data.Legendary[j].rarity);
           rarityInfo.append(Legendary);
           legendaryIndex++;
           break;
@@ -143,7 +143,7 @@ function fetchRarePokemonGoData(pokeGo) {
       }
       for (var k = 0; k < data.Mythic.length; k++) {
         if (data.Mythic[k].form == 'Normal' && data.Mythic[k].pokemon_id === pokeGo) {
-          var Mythic = $('<h1>').text('Rarity: ' + data.Mythic[k].rarity);
+          var Mythic = $('<h2>').text('Rarity: ' + data.Mythic[k].rarity);
           rarityInfo.append(Mythic);
           mythicIndex++;
           break;
@@ -151,7 +151,7 @@ function fetchRarePokemonGoData(pokeGo) {
       }
       for (var l = 0; l < data.Standard.length; l++) {
         if (data.Standard[l].form == 'Normal' && data.Standard[l].pokemon_id === pokeGo) {
-          var Standard = $('<h1>').text('Rarity: ' + data.Standard[l].rarity);
+          var Standard = $('<h2>').text('Rarity: ' + data.Standard[l].rarity);
           rarityInfo.append(Standard);
           standardIndex++;
           break;
@@ -159,7 +159,7 @@ function fetchRarePokemonGoData(pokeGo) {
       }
       for (var m = 0; m < data["Ultra beast"].length; m++) {
         if (data["Ultra beast"][m].form == 'Normal' && data["Ultra beast"][m].pokemon_id === pokeGo) {
-          var Ultrabeast = $('<h1>').text('Rarity: ' + data["Ultra beast"][m].rarity);
+          var Ultrabeast = $('<h2>').text('Rarity: ' + data["Ultra beast"][m].rarity);
           rarityInfo.append(Ultrabeast);
           ultraBeastIndex++;
           break;
@@ -201,24 +201,25 @@ function fetchEvolutionPokemonGoData(pokeGo) {
 }
 
 function addCSS () {
-  var element = document.getElementById('pokeAPI')
+  var element = document.getElementById('asdf')
   element.classList.add('column')
 
-  var element = document.getElementById('rarity')
-  element.classList.add('column')
-
-  var element = document.getElementById('evolve')
-  element.classList.add('column')
+  var element = document.getElementById('asdf')
+  element.classList.add('is-5')
 
   var element = document.getElementById('pogoAPI')
   element.classList.add('column')
 
-  // var element = document.getElementById('search-history')
-  // element.classList.add('table')
+  var element = document.getElementById('pogoAPI')
+  element.classList.add('is-5')
+
+  var element = document.getElementById('pogoAPI')
+  element.classList.remove('hide')
 }
 
 $(document).on('click', '.list-group-item', function () {
   var pokemonName = $(this).text();
   $('#search-input').val(pokemonName);
   $('#search-form').submit();
+  addCSS()
 });

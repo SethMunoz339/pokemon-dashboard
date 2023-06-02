@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <nav class="navbar" role="navigation" aria-label="main navigation">
+  <img id="pokelogo" src=".assets/pokemonlogo.png"></img>
   <div class="navbar-brand">
     <a class="navbar-item">
       <div>PokeAPI Dashboard</div>
@@ -25,7 +26,8 @@
       </a>
     </div>
   </div>
-</nav>
+</nav> 
+<img id="pokelist" src=".assets/pokelist.png"></img>
 <body>
   <form id="search-form" class="box">
     <div class="form-group navigation-buttons">
@@ -38,6 +40,7 @@
       <div class="modal-background"></div>
       <header class="modal-card-head">
         <p class="modal-card-title">Professor Oak says,</p>
+        <img id="oak" src=".assets/professor oak.jfif" alt="Professor Oak"></img>
         <div class="modal-content">Do you want to clear your Pokedex?</div>
         <button id="clearLocalStorage" class="button">YES!</button>
         <button id="modal-delete" class="delete" aria-label="close"></button>
@@ -49,20 +52,22 @@
     </div>
   </form>
 
-<div class="columns">
-  <div class='column is-1'>
-    <h3>Search History:</h3>
-    <ul id="search-history" class="list-group"></ul>
+  <div class="columns ">
+    <div class='column is-2'>
+      <h3>Search History:</h3>
+      <ul id="search-history" class="list-group"></ul>
+    </div>
+  
+    <div class="container columns is-multiline is-centered has-text-centered">
+      <div id="asdf">
+      <div id="pokeAPI">Gotta Catch 'em All!</div>
+      <div id="rarity"></div>
+      <div id="evolve"></div>
+      </div>
+    
+      <div class="container hide" id="pogoAPI">Pokemon Go!</div>
+    </div>
   </div>
-
-  <div class="container has-text-centered">
-    <div id="pokeAPI">Gotta Catch 'em All!</div>
-    <div id="rarity"></div>
-    <div id="evolve"></div>
-    <div id="pogoAPI">Pokemon Go!</div>
-  </div>
-</div>
-
 </body>
 
 <footer class="footer">
