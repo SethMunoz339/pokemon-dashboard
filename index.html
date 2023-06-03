@@ -8,26 +8,16 @@
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <nav class="navbar" role="navigation" aria-label="main navigation">
-  <img id="pokelogo" src=".assets/pokemonlogo.png"></img>
-  <div class="navbar-brand">
-    <a class="navbar-item">
-      <div>PokeAPI Dashboard</div>
-    </a>
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
+  <img id="pokelogo" src=".\assets\pokemonlogo.png"></img>
+
+  <div id="titleBox">
+    <p id=navTitle>Pokemon Dashboard</p>
   </div>
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">
-        Home
-      </a>
-    </div>
-  </div>
+  <img id="pokegologo" src=".\assets\pokemon_go_logo.png"></img>
+
+   
 </nav> 
-<img id="pokelist" src=".assets/pokelist.png"></img>
+
 <body>
   <form id="search-form" class="box">
     <div class="form-group navigation-buttons">
@@ -38,13 +28,28 @@
     <button type="submit" class="btn btn-primary button" onclick="addCSS()">Search</button>
     <div id="modal-clear" class="modal">
       <div class="modal-background"></div>
-      <header class="modal-card-head">
-        <p class="modal-card-title">Professor Oak says,</p>
-        <img id="oak" src=".assets/professor oak.jfif" alt="Professor Oak"></img>
-        <div class="modal-content">Do you want to clear your Pokedex?</div>
-        <button id="clearLocalStorage" class="button">YES!</button>
-        <button id="modal-delete" class="delete" aria-label="close"></button>
-      </header>
+        <div class="modal-card is-centered">
+          <header class="modal-card-head is-centered">
+            <figure class="image is-128x128 is-centered">
+              <img src=".\assets\pokemonlogo.png" alt="pokemon logo"></img>
+            </figure>
+          </header>
+          <section class="modal-card-body is-centered">
+            <p class="modal-content">Professor Oak says,  </p>
+              <figure class="image is-128x128 is-centered">
+                <img src=".\assets\professor_oak.png" alt="Professor Oak"></img>
+              </figure>
+              <p class="modal-content">Do you want to clear your pokedex?</p>
+              <figure class="image is-128x128 is-centered">
+                <img src=".\assets\pokedex.png" alt="pokedex"></img>                
+              </figure>
+            
+          </section>
+          <footer class="modal-card-foot is-centered">
+            <button id="clearLocalStorage" class="button is-danger is-focused">YES!</button>
+            <button id="modal-delete" class="button is-success is-focused" aria-label="close">No, thanks</button>
+        </footer>
+        </div>
       <section class="modal-card-body">
       </section>
     </div>
@@ -59,7 +64,7 @@
     </div>
   
     <div class="container columns is-multiline is-centered has-text-centered">
-      <div id="asdf">
+      <div id="main">
       <div id="pokeAPI">Gotta Catch 'em All!</div>
       <div id="rarity"></div>
       <div id="evolve"></div>

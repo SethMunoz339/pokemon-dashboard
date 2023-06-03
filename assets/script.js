@@ -53,6 +53,7 @@ $('#search-form').submit(function (event) {
       console.log(pokeId);
       console.log(pokeName);
       localStorage.setItem('pokeGo', JSON.stringify(pokeId));
+      localStorage.setItem('pokeName', JSON.stringify(pokeName));
       var pokeInfo = $('#pokeAPI');
       pokeInfo.empty();
       var pokeTitle = $('<h1>').text('Gotta Catch em All!');
@@ -61,7 +62,7 @@ $('#search-form').submit(function (event) {
       pokeInfo.append(pokeName);
       var pokeId = $('<h3>').text(data.id);
       pokeInfo.append(pokeId);
-      var sprite = $('<img>').attr('src', data.sprites.front_default);
+      var sprite = $('<img id=sprite>').attr('src', data.sprites.front_default);
       pokeInfo.append(sprite);
       var xp = $('<p>').text('Base Experience: ' + data.base_experience);
       pokeInfo.append(xp);
@@ -198,13 +199,30 @@ function fetchEvolutionPokemonGoData(pokeGo) {
         }
       }
     });
+    fetchSpeciesData()
 }
+function fetchSpeciesData(pokeName) {
+  var pokeName = JSON.parse(localStorage.getItem('pokeName')) || [];
+  var pokemonSpeciesCallURL = 'https://pokeapi.co/api/v2/pokemon-species/' + pokeName;
+  fetch(pokemonSpeciesCallURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      var pokeGoInfo = $('#pogoAPI');
+      for (var i = 0; i < data.flavor_text_entries.length; i++) {
+        if (data.flavor_text_entries[i].language.name == 'en') {
+          var flavor = $('<h1 id=flavor>').text(data.flavor_text_entries[i].flavor_text);
+          pokeGoInfo.append(flavor);
+          break;
+        }}})}
 
 function addCSS () {
-  var element = document.getElementById('asdf')
+  var element = document.getElementById('main')
   element.classList.add('column')
 
-  var element = document.getElementById('asdf')
+  var element = document.getElementById('main')
   element.classList.add('is-5')
 
   var element = document.getElementById('pogoAPI')

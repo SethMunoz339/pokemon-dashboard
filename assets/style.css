@@ -13,7 +13,44 @@ body {
 }
 
 .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     background-color: #2a75bb;
+}
+
+#titleBox{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center
+}
+
+#navTitle {
+    display: flex;
+    align-items: center;
+    border:solid#ffcb05;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    font-size: x-large;
+    color: #ffcb05;
+}
+
+#pokelogo {
+    display: flex;
+    width: 300px;
+    height: 200px;
+    flex-wrap: wrap;
+}
+
+#pokegologo {
+    display: flex;
+    width: 198px;
+    height: 124px;
+    margin-right: 50px;
+    margin-left: 50px;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .navigation-buttons {
@@ -27,13 +64,46 @@ body {
 .list-group-item {
     cursor: pointer;
   }
-
+.modal-background {
+    display: flex;
+}
 .modal-card-head {
-    margin:200px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-overflow-scrolling: touch;
+    background-color: #2a75bb;
+    flex-grow: 0;
+    overflow-y: none;
+    overflow-x: none;
+    justify-content: center;
+}
+
+.modal-card-body {
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+    flex-grow: 0;
+    overflow-y: none;
+    overflow-x: none;
+    justify-content: center;
+}
+.modal-card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-overflow-scrolling: touch;
+    background-color: #ffcb05;
+    flex-grow: 0;
+    overflow-y: none;
+    overflow-x: none;
+    justify-content: center;
 }
 
 .modal-content {
+    flex-grow: 0;
+    overflow-y: none;
+    overflow-x: none;
+    align-items: center;
     text-align: center;
     font-size: x-large;
 }
@@ -61,16 +131,28 @@ h3 {
     font-size: larger;
 }
 
-#pokelogo {
-    width: 160px;
-    height: 50px;
-    opacity: 0.6;
-}
-
-#pokelist {
-    opacity: 0.4;
-}
-
 .hide {
     display: none;
+}
+
+#sprite {
+   width: 200px;
+   height: 200px; 
+}
+#oak{
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+}
+
+#pokedex{
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+}
+
+#flavor{
+    margin-top: 50px;
 }
