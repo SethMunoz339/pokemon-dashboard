@@ -1,51 +1,67 @@
-var modal = $('.modal')
 // Load search history from localStorage
 var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-// Display search and clear search history
+// Display search history
 function displaySearchHistory() {
   $('#search-history').empty();
-  var uniqueHistory = new Set(searchHistory); // Create a Set to store unique entries
-  uniqueHistory.forEach(function (entry) {
+  var uniqueHistory = new Set(searchHistory);
+  uniqueHistory.forEach(function(entry) {
     var li = $('<li>').addClass('list-group-item').text(entry);
     $('#search-history').append(li);
   });
 }
+
 displaySearchHistory();
-document.getElementById('clearButton').addEventListener('click',
-  // Functions to open and close a modal
-  function openModal() {
-    document.getElementById("modal-clear").classList.add("is-active");
-  })
-document.getElementById('modal-delete').addEventListener('click',
-  function closeModal() {
-    document.getElementById("modal-clear").classList.remove("is-active");
-  })
-document.getElementById('clearLocalStorage').addEventListener('click',
-  function
-    () {
-    localStorage.clear();
-    document.getElementById("modal-clear").classList.remove("is-active");
-    location.reload();
-  })
-// Handle form submission
-$('#search-form').submit(function (event) {
+
+// modal calls and functions
+function openClearModal() {
+  document.getElementById("modal-clear").classList.add("is-active");
+}
+
+function closeClearModal() {
+  document.getElementById("modal-clear").classList.remove("is-active");
+}
+
+function openErrorModal() {
+  document.getElementById("modal-error").classList.add("is-active");
+}
+
+function closeErrorModal() {
+  document.getElementById("modal-error").classList.remove("is-active");
+}
+
+function clearLocalStorage() {
+  localStorage.clear();
+  document.getElementById("modal-clear").classList.remove("is-active");
+  location.reload();
+}
+
+
+document.getElementById('clearButton').addEventListener('click', openClearModal);
+document.getElementById('modal-delete').addEventListener('click', closeClearModal);
+document.getElementById('modal-error-delete').addEventListener('click', closeErrorModal);
+document.getElementById('clearLocalStorage').addEventListener('click', clearLocalStorage);
+// submit search form
+$('#search-form').submit(function(event) {
   event.preventDefault();
   var pokemonName = $('#search-input').val().toLowerCase().trim();
   if (pokemonName === '') {
     return;
   }
-  // Clear input field
   $('#search-input').val('');
-  // Add pokemon name to search history
+  // add search to search history
   searchHistory.push(pokemonName);
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
   displaySearchHistory();
-  // Fetch data of a pokemon by name
   var pokemonCallURL = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName;
   fetch(pokemonCallURL)
-    .then(function (response) {
+    .then(function(response) {
+      // handle 404 errors for bad searches (see .catch)
+      if (!response.ok) {
+        throw new Error('Pokemon not found');
+      }
       return response.json();
     })
+    // set pokeAPI data to local storage
     .then(function (data) {
       console.log(data);
       var pokeId = data.id;
@@ -54,6 +70,7 @@ $('#search-form').submit(function (event) {
       console.log(pokeName);
       localStorage.setItem('pokeGo', JSON.stringify(pokeId));
       localStorage.setItem('pokeName', JSON.stringify(pokeName));
+      // Code to display Pokemon information from pokeAPI in first info container
       var pokeInfo = $('#pokeAPI');
       pokeInfo.empty();
       var pokeTitle = $('<h1>').text('Gotta Catch em All!');
@@ -88,10 +105,24 @@ $('#search-form').submit(function (event) {
         var type = $('<li>').text(data.types[i].type.name);
         pokeInfo.append(type);
       }
-      var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
-      fetchPokemonGoData(pokeGo);
+      // calls the next function
+      fetchPokemonGoData();
+    })
+    // handle 404 errors for bad searches
+    .catch(function(error) {
+      openErrorModal()
+      console.error(error);
+
+      var index = searchHistory.indexOf(pokemonName);
+      if (index > -1) {
+        searchHistory.splice(index, 1);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        displaySearchHistory();
+      }
     });
 });
+
+// call data from pogoAPI
 function fetchPokemonGoData(pokeGo) {
   var pokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_stats.json';
   fetch(pokemonGoCallURL)
@@ -99,6 +130,7 @@ function fetchPokemonGoData(pokeGo) {
       return response.json();
     })
     .then(function (data) {
+      // Code to display Pokemon information from pokeAPI in second info container
       var pokeGoInfo = $('#pogoAPI');
       pokeGoInfo.empty();
       var pokeGoTitle = $('<h1>').text('Pokemon GO!');
@@ -116,9 +148,11 @@ function fetchPokemonGoData(pokeGo) {
           localStorage.removeItem(pokeGo);
         }
       }
+      // calls the next function
       fetchRarePokemonGoData(pokeGo);
     });
 }
+// call data from pogoAPI
 function fetchRarePokemonGoData(pokeGo) {
   var rarePokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_rarity.json';
   fetch(rarePokemonGoCallURL)
@@ -126,6 +160,7 @@ function fetchRarePokemonGoData(pokeGo) {
       return response.json();
     })
     .then(function (data) {
+      // Code to display Pokemon information from pogoAPI in first info container
       console.log(data);
       var rarityInfo = $('#rarity');
       rarityInfo.empty();
@@ -134,6 +169,7 @@ function fetchRarePokemonGoData(pokeGo) {
       var mythicIndex = 0;
       var standardIndex = 0;
       var ultraBeastIndex = 0;
+      // for loop cycles through several different arrays to find rarity
       for (var j = 0; j < data.Legendary.length; j++) {
         if (data.Legendary[j].form == 'Normal' && data.Legendary[j].pokemon_id === pokeGo) {
           var Legendary = $('<h2>').text('Rarity: ' + data.Legendary[j].rarity);
@@ -166,10 +202,12 @@ function fetchRarePokemonGoData(pokeGo) {
           break;
         }
       }
+      // calls the next function
       fetchEvolutionPokemonGoData(pokeGo)
     }
     )
 };
+// call data from pogoAPI
 function fetchEvolutionPokemonGoData(pokeGo) {
   var evolutionPokemonGoCallURL = 'https://pogoapi.net/api/v1/pokemon_evolutions.json';
   fetch(evolutionPokemonGoCallURL)
@@ -178,8 +216,10 @@ function fetchEvolutionPokemonGoData(pokeGo) {
     })
     .then(function (data) {
       console.log(data);
+      // Code to display Pokemon information from pogoAPI in first info container
       var evolveInfo = $('#evolve');
       evolveInfo.empty();
+      // for loop cycles through data to find evolution
       var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
       for (var i = 0; i < data.length; i++) {
         if (data[i].form == 'Normal' && data[i].pokemon_id === pokeGo) {
@@ -187,7 +227,8 @@ function fetchEvolutionPokemonGoData(pokeGo) {
           for (var j = 0; j < evolutions.length; j++) {
             var evoName = evolutions[j].pokemon_name
             var evolution = $('<p>').text('This pokemon evolves into ' + evoName + '!');
-            var evolveButton = $('<button>').text(evoName)
+            // on click the button "evolves" the pokemon by running a submit with the name of the pokemon from local storage
+            var evolveButton = $('<button id=evoButton>').text(evoName)
               .on('click', evolveButton, function () {
                 var evoName = $(this).text();
                 $('#search-input').val(evoName);
@@ -199,8 +240,10 @@ function fetchEvolutionPokemonGoData(pokeGo) {
         }
       }
     });
+     // calls the next function
     fetchSpeciesData()
 }
+// call data from pokeAPI
 function fetchSpeciesData(pokeName) {
   var pokeName = JSON.parse(localStorage.getItem('pokeName')) || [];
   var pokemonSpeciesCallURL = 'https://pokeapi.co/api/v2/pokemon-species/' + pokeName;
@@ -210,6 +253,7 @@ function fetchSpeciesData(pokeName) {
     })
     .then(function (data) {
       console.log(data);
+      // Code to display Pokemon information from pokeAPI in second info container
       var pokeGoInfo = $('#pogoAPI');
       for (var i = 0; i < data.flavor_text_entries.length; i++) {
         if (data.flavor_text_entries[i].language.name == 'en') {
@@ -217,7 +261,7 @@ function fetchSpeciesData(pokeName) {
           pokeGoInfo.append(flavor);
           break;
         }}})}
-
+// adds bulma css to information containers
 function addCSS () {
   var element = document.getElementById('main')
   element.classList.add('column')
@@ -234,7 +278,7 @@ function addCSS () {
   var element = document.getElementById('pogoAPI')
   element.classList.remove('hide')
 }
-
+// runs submit function from search history elements
 $(document).on('click', '.list-group-item', function () {
   var pokemonName = $(this).text();
   $('#search-input').val(pokemonName);
