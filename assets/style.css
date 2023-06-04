@@ -156,3 +156,22 @@ h3 {
 #flavor{
     margin-top: 50px;
 }
+
+.button {
+    background-color: #2a75bb;
+    border:solid#ffcb05;
+    color: #ffcb05;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 3px;
+    align-items: center;
+}
+#evoButton {
+    background-color: #2a75bb;
+    border:solid#ffcb05;
+    color: #ffcb05;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 3px;
+    align-items: center;
+}

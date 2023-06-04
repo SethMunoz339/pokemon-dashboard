@@ -13,9 +13,7 @@
   <div id="titleBox">
     <p id=navTitle>Pokemon Dashboard</p>
   </div>
-  <img id="pokegologo" src=".\assets\pokemon_go_logo.png"></img>
-
-   
+  <img id="pokegologo" src=".\assets\pokemon_go_logo.png"></img> 
 </nav> 
 
 <body>
@@ -25,7 +23,9 @@
       <input type="text" class="form-control input is-primary is-small is-rounded" id="search-input"
         placeholder="Search for a pokemon">
     </div>
+    <!-- on click-adds containers for API information-->
     <button type="submit" class="btn btn-primary button" onclick="addCSS()">Search</button>
+    <!-- clear history modal -->
     <div id="modal-clear" class="modal">
       <div class="modal-background"></div>
         <div class="modal-card is-centered">
@@ -46,6 +46,7 @@
             
           </section>
           <footer class="modal-card-foot is-centered">
+            <!-- buttons to clear local storage and close the modal -->
             <button id="clearLocalStorage" class="button is-danger is-focused">YES!</button>
             <button id="modal-delete" class="button is-success is-focused" aria-label="close">No, thanks</button>
         </footer>
@@ -53,23 +54,53 @@
       <section class="modal-card-body">
       </section>
     </div>
+    <!-- button to open clear storage modal -->
     <button id="clearButton" class="button">Clear Search History</button>
     </div>
   </form>
-
+  <!-- 404 error modal -->
+  <div id="modal-error" class="modal">
+    <div class="modal-background"></div>
+      <div class="modal-card is-centered">
+        <header class="modal-card-head is-centered">
+          <figure class="image is-128x128 is-centered">
+            <img src=".\assets\pokemonlogo.png" alt="pokemon logo"></img>
+          </figure>
+        </header>
+        <section class="modal-card-body is-centered">
+          <p class="modal-content">Professor Oak says,  </p>
+            <figure class="image is-128x128 is-centered">
+              <img src=".\assets\professor_oak.png" alt="Professor Oak"></img>
+            </figure>
+            <p class="modal-content">This pokemon cannot be found in your pokedex!</p>
+            <p class="modal-content">Please try again.</p>
+            <figure class="image is-128x128 is-centered">
+              <img src=".\assets\pokedex.png" alt="pokedex"></img>                
+            </figure>
+          
+        </section>
+        <footer class="modal-card-foot is-centered">
+          <!-- button to close modal -->
+          <button id="modal-error-delete" class="button is-success is-focused" aria-label="close">Got it!</button>
+      </footer>
+      </div>
+    <section class="modal-card-body">
+    </section>
+  </div>
   <div class="columns ">
+    <!-- search history container -->
     <div class='column is-2'>
       <h3>Search History:</h3>
       <ul id="search-history" class="list-group"></ul>
     </div>
-  
+    <!-- first information container -->
     <div class="container columns is-multiline is-centered has-text-centered">
       <div id="main">
       <div id="pokeAPI">Gotta Catch 'em All!</div>
       <div id="rarity"></div>
       <div id="evolve"></div>
       </div>
-    
+      <!-- second information container -->
       <div class="container hide" id="pogoAPI">Pokemon Go!</div>
     </div>
   </div>
@@ -78,7 +109,7 @@
 <footer class="footer">
   <div class="content has-text-centered">
     Pokemon Dashboard 2023
-    (Seth, Jon, Colin)
+    (Colin Moon, Seth Munoz, Jonathan Pabon)
   </div>
 </footer>
 
