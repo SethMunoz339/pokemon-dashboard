@@ -17,7 +17,7 @@ When the page opens, the user is presented with a text entry box to search for a
 
 ## URL
 
-[Link to Website](https://sethmunoz339.github.io/pokemon-dashboard/)/)
+[Link to Website](https://sethmunoz339.github.io/pokemon-dashboard/)
 ## Credits
 
 Colin Moon, Seth Munoz, and Jonathan Pabon contributed to this webpage.
