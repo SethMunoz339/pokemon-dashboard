@@ -130,6 +130,7 @@ function fetchPokemonGoData(pokeGo) {
       return response.json();
     })
     .then(function (data) {
+      
       // Code to display Pokemon information from pokeAPI in second info container
       var pokeGoInfo = $('#pogoAPI');
       pokeGoInfo.empty();
@@ -137,6 +138,7 @@ function fetchPokemonGoData(pokeGo) {
       pokeGoInfo.append(pokeGoTitle);
       var typeUl = $('<ul>').text('Pokemon Go - Base Statistics:');
       pokeGoInfo.append(typeUl);
+      var pokeGo = JSON.parse(localStorage.getItem('pokeGo')) || [];
       for (var i = 0; i < data.length; i++) {
         if (data[i].pokemon_id === pokeGo) {
           var baseAttack = $('<li>').text('Base attack: ' + data[i].form + ' - ' + data[i].base_attack);
@@ -145,7 +147,7 @@ function fetchPokemonGoData(pokeGo) {
           pokeGoInfo.append(baseDefense);
           var baseStamina = $('<li>').text('Base stamina: ' + data[i].form + ' - ' + data[i].base_stamina);
           pokeGoInfo.append(baseStamina);
-          localStorage.removeItem(pokeGo);
+          // localStorage.removeItem(pokeGo);
         }
       }
       // calls the next function
